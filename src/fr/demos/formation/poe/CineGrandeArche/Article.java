@@ -70,13 +70,30 @@ public abstract class Article {
 	}// addStock
 
 	public void removeStock(int quantite) {
-		if (this.stock == 0) {
-		} else {
-			if (!this.isDematerialise()) {
+		if (!this.isDematerialise()) { // si dematérialisé est false
+			if (this.stock == 0) {
+			} else {
 				this.stock = this.stock - quantite;
 			}
 		}
 	}// removeStock
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Article other = (Article) obj;
+		if (ref == null) {
+			if (other.ref != null)
+				return false;
+		} else if (!ref.equals(other.ref))
+			return false;
+		return true;
+	}
 
 	public double getPrixHt() {
 		return prixHt;
@@ -111,8 +128,12 @@ public abstract class Article {
 	}
 
 	public int getStock() {
+		if (this.isDematerialise()){ // si dématerialisé, pas de stock à gérer, "1 valeur finale"
+			return 1;
+		} else {
 		return stock;
-	}
+		}
+	}	
 
 	public Etat getEtat() {
 		return etat;
