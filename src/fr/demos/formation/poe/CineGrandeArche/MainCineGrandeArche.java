@@ -17,16 +17,23 @@ public class MainCineGrandeArche {
 
 		Panier p1 = new Panier();
 		System.out.println("j'ajoute un livre l1 dans panier"); 
-		p1.ajouterUnArticle(l2, 2);
+		try {
+			p1.ajouterUnArticle(l2, 2);
+		} catch (ExceptionQuantiteDemandeeSuperieureAuStock e1) {
+			System.out.println(e1.getMessage());
+		}
 		
 		for (LignePanier ligneArticle : p1.lignesPanier){
 			System.out.println(ligneArticle);
 		}
 
 		System.out.println("j'ajoute un second livre l1 dans panier"); 
-		p1.ajouterUnArticle(l2, 1);
-		for (LignePanier ligneArticle : p1.lignesPanier){
-			System.out.println(ligneArticle);
+		try {
+			p1.ajouterUnArticle(l2, 1);
+			for (LignePanier ligneArticle : p1.lignesPanier){
+				System.out.println(ligneArticle);}
+		} catch (ExceptionQuantiteDemandeeSuperieureAuStock e1) {
+			System.out.println(e1.getMessage());
 		}
 	
 		System.out.println("je calcule le montant total du panier"); 
@@ -37,19 +44,30 @@ public class MainCineGrandeArche {
 			for (LignePanier ligneArticle : p1.lignesPanier){
 				System.out.println(ligneArticle);
 			}
-		} catch (ExceptionRetirerArticlePanier e) {
-			System.out.println(e.getMessage());		}
 
+		} catch (ExceptionRetirerArticlePanier e1) {
+			System.out.println(e1.getMessage());
+		} catch (ExceptionRetirerArticleAbsentDuPanier e1) {
+			System.out.println(e1.getMessage());
+		}
+		
 		System.out.println("je calcule le montant total du panier"); 
 		System.out.println(p1.getPrixTotal());
 	
-		try {
-			p1.retirerUnArticle(l2, 3);
-			for (LignePanier ligneArticle : p1.lignesPanier){
-				System.out.println(ligneArticle);
+			try {
+				p1.retirerUnArticle(l2, 3);
+				for (LignePanier ligneArticle : p1.lignesPanier){
+					System.out.println(ligneArticle);
+				}
+			} catch (ExceptionRetirerArticlePanier e) {
+				System.out.println(e.getMessage() + e.getQuantiteDepassement());
+			} catch (ExceptionRetirerArticleAbsentDuPanier e) {
+				System.out.println(e.getMessage());
 			}
-		} catch (ExceptionRetirerArticlePanier e) {
-			System.out.println(e.getMessage() + e.getQuantiteDepassement());		}
+
+			
+			
+			//System.out.println(e.getMessage() + e.getQuantiteDepassement());		}
 
 		System.out.println("je calcule le montant total du panier"); 
 		System.out.println(p1.getPrixTotal());
